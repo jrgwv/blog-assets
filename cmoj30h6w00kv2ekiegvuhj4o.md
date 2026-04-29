@@ -5,6 +5,7 @@ seoDescription: "Hybrid search (BM25 + vector + RRF) improves RAG retrieval for 
 datePublished: 2026-04-28T20:31:44.655Z
 cuid: cmoj30h6w00kv2ekiegvuhj4o
 slug: why-vector-search-alone-fails-on-regulatory-documents
+cover: https://cdn.hashnode.com/uploads/covers/69d828c8fa7251682e0c6f85/7f0c0feb-580f-4816-8ef1-c17ab96e206a.png
 tags: nlp, opensearch, embedding, amazon-bedrock, rag, retrieval-augmented-generation, hybrid-search, regulatory
 
 ---
@@ -49,11 +50,11 @@ The insight: **Vector search is semantically precise for focused queries but can
 
 Hybrid search runs both retrieval methods in parallel and merges the results. The architecture looks like this:
 
-![Hybrid Search with RRF Fusion](https://raw.githubusercontent.com/jrgwv/blog-assets/main/diagrams/hybrid-search/hybrid-search-rrf.jpg)
+![Hybrid Search with RRF Fusion](https://raw.githubusercontent.com/jrgwv/blog-assets/main/diagrams/hybrid-search/hybrid-search-rrf.jpg align="center")
 
 The key is the fusion step. Reciprocal Rank Fusion (RRF) is elegantly simple:
 
-$$score(doc) = \sum \frac{1}{k + rank_i(doc)}$$
+`score(doc) = \sum \frac{1}{k + rank_i(doc)}`
 
 ```python
 def rrf_fusion(result_lists, k=60):
@@ -162,7 +163,7 @@ Recent work on hybrid and multi-stage retrieval systems shows consistent gains i
 
 The full system runs on AWS with minimal operational overhead:
 
-![AWS Architecture](https://raw.githubusercontent.com/jrgwv/blog-assets/main/diagrams/hybrid-search/aws-hybrid-search-architecture-matching.png)
+![AWS Architecture](https://raw.githubusercontent.com/jrgwv/blog-assets/main/diagrams/hybrid-search/aws-hybrid-search-architecture-matching.png align="center")
 
 The ingestion pipeline is fully serverless (Lambda, Step Functions, EventBridge). The search layer uses an OpenSearch managed domain — AWS handles patching, backups, and snapshots, but you're provisioning and sizing the cluster (instance types, node counts, storage). This is a deliberate choice: the managed domain gives us UltraWarm tiering for cost-effective warm storage and full control over the k-NN index configuration (HNSW engine, space type, shard count) that OpenSearch Serverless doesn't yet expose.
 
