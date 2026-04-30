@@ -1,0 +1,107 @@
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="430" fill="#f8fafc" rx="16"/>
+
+  <!-- Title -->
+  <text x="450" y="44" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a" letter-spacing="-0.3">The Institutional Memory Loop</text>
+
+  <!-- Phase label: CAPTURE -->
+  <text x="70" y="104" font-size="10" font-weight="700" fill="#2563eb" letter-spacing="1.5">① CAPTURE</text>
+  <line x1="70" y1="108" x2="830" y2="108" stroke="#bfdbfe" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Phase label: RETRIEVE -->
+  <line x1="70" y1="398" x2="830" y2="398" stroke="#a7f3d0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="70" y="413" font-size="10" font-weight="700" fill="#059669" letter-spacing="1.5">② RETRIEVE</text>
+
+  <!-- ===== TOP ROW (CAPTURE) ===== -->
+
+  <!-- Box 1: React App (Selection) -->
+  <rect x="70" y="118" width="158" height="74" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="149" y="146" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">React App</text>
+  <text x="149" y="163" text-anchor="middle" font-size="10" fill="#2563eb">Site selection UI</text>
+  <text x="149" y="178" text-anchor="middle" font-size="10" fill="#2563eb">+ capture panel</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="228" y1="155" x2="263" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 2: AI Capture Interview -->
+  <rect x="266" y="118" width="158" height="74" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="345" y="146" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">AI Capture</text>
+  <text x="345" y="163" text-anchor="middle" font-size="10" fill="#2563eb">Conversational debrief</text>
+  <text x="345" y="178" text-anchor="middle" font-size="10" fill="#2563eb">via Bedrock Claude</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="424" y1="155" x2="459" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 3: Decision Record -->
+  <rect x="462" y="118" width="158" height="74" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="541" y="146" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">Decision Record</text>
+  <text x="541" y="163" text-anchor="middle" font-size="10" fill="#2563eb">Structured markdown</text>
+  <text x="541" y="178" text-anchor="middle" font-size="10" fill="#2563eb">with rationale sections</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="620" y1="155" x2="655" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Box 4: S3 (pivot) -->
+  <rect x="658" y="118" width="172" height="74" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="744" y="146" text-anchor="middle" font-size="12" font-weight="600" fill="#92400e">Amazon S3</text>
+  <text x="744" y="163" text-anchor="middle" font-size="10" fill="#b45309">decision-records/</text>
+  <text x="744" y="178" text-anchor="middle" font-size="10" fill="#b45309">S3 event → KB sync</text>
+
+  <!-- Right-side connector: S3 bottom → KB top (vertical arrow) -->
+  <path d="M744 192 L744 265" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="750" y="218" width="56" height="20" rx="4" fill="#f1f5f9"/>
+  <text x="778" y="232" text-anchor="middle" font-size="9" fill="#64748b">ingestion job</text>
+
+  <!-- ===== BOTTOM ROW (RETRIEVE) ===== -->
+
+  <!-- Box 4b: Bedrock KB -->
+  <rect x="658" y="268" width="172" height="74" rx="8" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="744" y="296" text-anchor="middle" font-size="12" font-weight="600" fill="#5b21b6">Bedrock KB</text>
+  <text x="744" y="313" text-anchor="middle" font-size="10" fill="#7c3aed">OpenSearch Serverless</text>
+  <text x="744" y="328" text-anchor="middle" font-size="10" fill="#7c3aed">vector embeddings</text>
+
+  <!-- Arrow KB←Agent (rightward box, leftward arrow) -->
+  <line x1="658" y1="305" x2="623" y2="305" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrL)"/>
+
+  <!-- Box 5: Agent Retrieval -->
+  <rect x="462" y="268" width="158" height="74" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="541" y="296" text-anchor="middle" font-size="12" font-weight="600" fill="#065f46">Agent Retrieval</text>
+  <text x="541" y="313" text-anchor="middle" font-size="10" fill="#059669">Hybrid search</text>
+  <text x="541" y="328" text-anchor="middle" font-size="10" fill="#059669">+ Claude synthesis</text>
+
+  <!-- Arrow Agent←Context -->
+  <line x1="462" y1="305" x2="427" y2="305" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrL)"/>
+
+  <!-- Box 6: Context Panel -->
+  <rect x="266" y="268" width="158" height="74" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="345" y="296" text-anchor="middle" font-size="12" font-weight="600" fill="#065f46">Context Panel</text>
+  <text x="345" y="313" text-anchor="middle" font-size="10" fill="#059669">Past decisions surfaced</text>
+  <text x="345" y="328" text-anchor="middle" font-size="10" fill="#059669">with provenance badge</text>
+
+  <!-- Arrow Context←React -->
+  <line x1="266" y1="305" x2="231" y2="305" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrL)"/>
+
+  <!-- Box 7: React App (same app, next team) -->
+  <rect x="70" y="268" width="158" height="74" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="149" y="296" text-anchor="middle" font-size="12" font-weight="600" fill="#065f46">React App</text>
+  <text x="149" y="313" text-anchor="middle" font-size="10" fill="#059669">Next team sees</text>
+  <text x="149" y="328" text-anchor="middle" font-size="10" fill="#059669">institutional context</text>
+
+  <!-- Left-side loop connector (dashed) -->
+  <path d="M149 268 L149 210 L149 192" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4" fill="none" marker-end="url(#arr)"/>
+  <rect x="154" y="220" width="52" height="20" rx="4" fill="#f1f5f9"/>
+  <text x="180" y="234" text-anchor="middle" font-size="9" fill="#64748b">same app</text>
+
+  <!-- Arrow marker defs -->
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+      <path d="M0,0 L0,7 L7,3.5 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrL" markerWidth="7" markerHeight="7" refX="1.5" refY="3.5" orient="auto">
+      <path d="M7,0 L7,7 L0,3.5 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+</svg>
