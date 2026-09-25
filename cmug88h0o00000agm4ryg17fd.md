@@ -24,11 +24,16 @@ The setup has two parts: a runtime and a model.
 
 Strands harness is a general-purpose agent you create with one function call. It's built on the Strands Harness SDK, available for Python and TypeScript, and licensed under Apache 2.0. Out of the box, it includes:
 
-- **Built-in tools** for running shell commands, reading, writing, and editing files, and fetching web pages.
-- **Context management** that truncates tool results over roughly 1,500 tokens, summarizes the conversation when it reaches 85% of the context window, and recovers if the context overflows.
-- **Sessions and memory**, so you can resume a conversation by ID and keep long-term memory across runs.
-- **Sub-agent delegation**, so the agent can hand subtasks to helper agents and track them on a checklist.
-- **Prompt caching**, turned on by default for providers that support it.
+*   **Built-in tools** for running shell commands, reading, writing, and editing files, and fetching web pages.
+    
+*   **Context management** that truncates tool results over roughly 1,500 tokens, summarizes the conversation when it reaches 85% of the context window, and recovers if the context overflows.
+    
+*   **Sessions and memory**, so you can resume a conversation by ID and keep long-term memory across runs.
+    
+*   **Sub-agent delegation**, so the agent can hand subtasks to helper agents and track them on a checklist.
+    
+*   **Prompt caching**, turned on by default for providers that support it.
+    
 
 The Strands team reports that the harness uses about 28% fewer tokens than comparable agent setups at the same accuracy across six benchmarks. The model is a single argument. Amazon Bedrock is the default provider, and you can switch to Anthropic, OpenAI, Google, Ollama, or LiteLLM with a `provider/model` string.
 
@@ -36,14 +41,17 @@ The Strands team reports that the harness uses about 28% fewer tokens than compa
 
 Kimi K3 is Moonshot AI's newest open-weight model, with 2.8 trillion parameters. Three features matter most for agent work:
 
-- A **1-million-token context window**, enough to hold a large codebase or a stack of long documents in one session.
-- **Native vision** for screenshots, diagrams, and scanned pages.
-- **Prompt caching.** Bedrock caches repeated prompt prefixes for Kimi K3 automatically, and Kimi K3 is the first open-weight model in Bedrock to support explicit prompt caching through the OpenAI-compatible APIs.
+*   A **1-million-token context window**, enough to hold a large codebase or a stack of long documents in one session.
+    
+*   **Native vision** for screenshots, diagrams, and scanned pages.
+    
+*   **Prompt caching.** Bedrock caches repeated prompt prefixes for Kimi K3 automatically, and Kimi K3 is the first open-weight model in Bedrock to support explicit prompt caching through the OpenAI-compatible APIs.
+    
 
 Kimi K3 runs through cross-Region inference, so you call it with an inference profile ID rather than a single-Region model ID:
 
 | Inference profile | ID | Coverage |
-|---|---|---|
+| --- | --- | --- |
 | US | `us.moonshotai.kimi-k3` | US Regions and Canada (Central) |
 | Global | `global.moonshotai.kimi-k3` | US, Canada, Europe, Asia Pacific, and more; about 10% cheaper |
 
@@ -53,34 +61,45 @@ As with other models in Bedrock, your prompts and outputs stay within AWS, aren'
 
 The short version: competitive model quality at a noticeably lower price, with the strongest results on coding.
 
-| | Kimi K3 | GPT-5.6 Sol | Claude Opus 5 | Claude Fable 5 |
-|---|---|---|---|---|
+|  | Kimi K3 | GPT-5.6 Sol | Claude Opus 5 | Claude Fable 5 |
+| --- | --- | --- | --- | --- |
 | Price per 1M tokens (input / output) | $3 / $15 | $4 / $20 | $5 / $25 | $10 / $50 |
 | Artificial Analysis Intelligence Index | 60 | 61 | 63 | 62 |
 | LMArena Frontend Code Arena (Elo) | **1,679 (#1)** | 1,618 | — | 1,631 |
 | Vals Index | 57.8% | 63.7% | 67.2% | 66.0% |
 
-*Kimi K3's price is Bedrock's global cross-Region Standard tier. Other prices are the vendors' published API list prices; GPT-5.6 Sol's is promotional through November 21, 2026. Benchmark scores are from Artificial Analysis (v4.1.1), LMArena, and Vals AI as of September 2026, compiled by [Codersera](https://codersera.com/blog/kimi-k3-benchmarks-comparison-2026/). Check the [Bedrock pricing page](https://aws.amazon.com/bedrock/pricing/) for current rates in your Region.*
+*Kimi K3's price is Bedrock's global cross-Region Standard tier. Other prices are the vendors' published API list prices; GPT-5.6 Sol's is promotional through November 21, 2026. Benchmark scores are from Artificial Analysis (v4.1.1), LMArena, and Vals AI as of September 2026, compiled by* [*Codersera*](https://codersera.com/blog/kimi-k3-benchmarks-comparison-2026/)*. Check the* [*Bedrock pricing page*](https://aws.amazon.com/bedrock/pricing/) *for current rates in your Region.*
 
 A few things stand out:
 
-- **Cost.** Kimi K3 costs 40% less per token than Claude Opus 5 and 70% less than Claude Fable 5. Cached input is $0.30 per million tokens, which matters for an agent that resends the same system prompt and tools every turn. Bedrock also offers a Flex tier at half the price ($1.50 input, $7.50 output) for workloads that can tolerate slower responses. However, Flex is only available through the OpenAI-compatible Responses and Chat Completions APIs, not the Converse API that the Strands Bedrock provider uses, so the code in this post runs on the Standard tier.
-- **Quality.** It lands within 1 to 3 points of all three rivals on Artificial Analysis's overall index, and it currently ranks first on LMArena's Frontend Code Arena, ahead of Claude Fable 5 and GPT-5.6 Sol.
-- **Where it trails.** On broader knowledge-work evaluations such as the Vals Index, Kimi K3 sits 6 to 9 points behind. Treat it as a strong default for coding and long-context agent work, not a drop-in replacement for every workload. Because the harness makes the model a single argument, it's easy to test both on your own tasks.
+*   **Cost.** Kimi K3 costs 40% less per token than Claude Opus 5 and 70% less than Claude Fable 5. Cached input is $0.30 per million tokens, which matters for an agent that resends the same system prompt and tools every turn. Bedrock also offers a Flex tier at half the price ($1.50 input, $7.50 output) for workloads that can tolerate slower responses. However, Flex is only available through the OpenAI-compatible Responses and Chat Completions APIs, not the Converse API that the Strands Bedrock provider uses, so the code in this post runs on the Standard tier.
+    
+*   **Quality.** It lands within 1 to 3 points of all three rivals on Artificial Analysis's overall index, and it currently ranks first on LMArena's Frontend Code Arena, ahead of Claude Fable 5 and GPT-5.6 Sol.
+    
+*   **Where it trails.** On broader knowledge-work evaluations such as the Vals Index, Kimi K3 sits 6 to 9 points behind. Treat it as a strong default for coding and long-context agent work, not a drop-in replacement for every workload. Because the harness makes the model a single argument, it's easy to test both on your own tasks.
+    
 
 ### Why pair them
 
-- **Lower token cost.** The harness keeps prompts lean with truncation and summarization, and Bedrock's automatic prompt caching reduces the cost of the system prompt and tool definitions that an agent loop resends on every turn.
-- **Room for long tasks.** A 1-million-token window lets the harness work through repository-wide refactors, research write-ups, and multi-document analysis without running out of context halfway through.
-- **No lock-in.** The same harness code runs against Bedrock, Anthropic, OpenAI, Google, or a local Ollama model. Trying Kimi K3 means changing one string, not rewriting your agent.
+*   **Lower token cost.** The harness keeps prompts lean with truncation and summarization, and Bedrock's automatic prompt caching reduces the cost of the system prompt and tool definitions that an agent loop resends on every turn.
+    
+*   **Room for long tasks.** A 1-million-token window lets the harness work through repository-wide refactors, research write-ups, and multi-document analysis without running out of context halfway through.
+    
+*   **No lock-in.** The same harness code runs against Bedrock, Anthropic, OpenAI, Google, or a local Ollama model. Trying Kimi K3 means changing one string, not rewriting your agent.
+    
 
 ## Prerequisites
 
-- An AWS account with access to Amazon Bedrock
-- IAM permissions to invoke Kimi K3 (`bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on the Kimi K3 inference profile and model)
-- The same permissions and model access for Claude Haiku 4.5 (`global.anthropic.claude-haiku-4-5-20251001-v1:0`), which the example uses to summarize fetched web pages
-- AWS credentials configured locally (`aws configure`, IAM Identity Center, or an instance role)
-- Python 3.10 or later, or Node.js if you want to use the CLI
+*   An AWS account with access to Amazon Bedrock
+    
+*   IAM permissions to invoke Kimi K3 (`bedrock:InvokeModel` and `bedrock:InvokeModelWithResponseStream` on the Kimi K3 inference profile and model)
+    
+*   The same permissions and model access for Claude Haiku 4.5 (`global.anthropic.claude-haiku-4-5-20251001-v1:0`), which the example uses to summarize fetched web pages
+    
+*   AWS credentials configured locally (`aws configure`, IAM Identity Center, or an instance role)
+    
+*   Python 3.10 or later, or Node.js if you want to use the CLI
+    
 
 ## Walkthrough
 
@@ -201,9 +220,12 @@ On my test, the resumed run took about 40 seconds. It also mattered for the next
 
 I expected the reasoning caveat to be easy to demonstrate: remove the hook, resume a session, watch Converse fail. It wasn't. I tried three ways to reproduce the `InternalServerException`:
 
-1. **Through the harness.** I ran a copy of `agent.py` with the hook removed, twice against the same session, so the second run replayed a real `reasoningContent` block. It completed without error.
-2. **Directly against Converse.** I sent a hand-built multi-turn request to `global.moonshotai.kimi-k3` with a prior assistant turn carrying a `reasoningContent` block. It succeeded.
-3. **With the exact block shape.** To rule out a malformed probe, I captured the reasoning block shape Kimi K3 returns in a live response and confirmed it matched both what my probe sent and what the harness persists in a session. Converse still accepted it.
+1.  **Through the harness.** I ran a copy of `agent.py` with the hook removed, twice against the same session, so the second run replayed a real `reasoningContent` block. It completed without error.
+    
+2.  **Directly against Converse.** I sent a hand-built multi-turn request to `global.moonshotai.kimi-k3` with a prior assistant turn carrying a `reasoningContent` block. It succeeded.
+    
+3.  **With the exact block shape.** To rule out a malformed probe, I captured the reasoning block shape Kimi K3 returns in a live response and confirmed it matched both what my probe sent and what the harness persists in a session. Converse still accepted it.
+    
 
 So on the Global profile from `us-east-1` on September 24, 2026, I couldn't reproduce the documented failure, with or without the hook. The most likely explanation is that the service-side behavior changed after the model card was written.
 
@@ -245,9 +267,14 @@ To try it, clone the [companion repo](https://github.com/jrgwv/strands-harness-k
 
 ## Resources
 
-- [Introducing Strands harness](https://strandsagents.com/blog/introducing-strands-harness/)
-- [Strands harness quickstart](https://strandsagents.com/docs/user-guide/harness/quickstart/)
-- [Strands Harness SDK on GitHub](https://github.com/strands-agents/harness-sdk)
-- [Introducing Kimi K3 on Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/introducing-kimi-k3-on-amazon-bedrock/)
-- [Kimi K3 model card in the Amazon Bedrock User Guide](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-moonshot-ai-kimi-k3.html)
-- [Companion repo: strands-harness-kimi-k3](https://github.com/jrgwv/strands-harness-kimi-k3)
+*   [Introducing Strands harness](https://strandsagents.com/blog/introducing-strands-harness/)
+    
+*   [Strands harness quickstart](https://strandsagents.com/docs/user-guide/harness/quickstart/)
+    
+*   [Strands Harness SDK on GitHub](https://github.com/strands-agents/harness-sdk)
+    
+*   [Introducing Kimi K3 on Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/introducing-kimi-k3-on-amazon-bedrock/)
+    
+*   [Kimi K3 model card in the Amazon Bedrock User Guide](https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-moonshot-ai-kimi-k3.html)
+    
+*   [Companion repo: strands-harness-kimi-k3](https://github.com/jrgwv/strands-harness-kimi-k3)
